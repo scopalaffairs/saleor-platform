@@ -26,7 +26,7 @@ services:
     image: ghcr.io/saleor/saleor-dashboard:latest
     container_name: dashboard
     ports:
-      - 9000:80
+      - 9000:9000
     restart: unless-stopped
 
   db:
