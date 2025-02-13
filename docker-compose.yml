@@ -63,8 +63,23 @@ services:
     depends_on:
       - redis
     volumes:
-      # shared volume between worker and api for media
       - saleor-media:/app/media
+
+  api-gateway:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - saleor-backend-tier
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/log/nginx:/var/log/nginx
+    depends_on:
+      - api
+      - dashboard
 
 volumes:
   saleor-db:
