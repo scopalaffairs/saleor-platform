@@ -1,5 +1,3 @@
-version: "3.4"
-
 services:
   api:
     image: ghcr.io/saleor/saleor:3.20
@@ -13,7 +11,6 @@ services:
     depends_on:
       - db
       - redis
-      - jaeger
     volumes:
       # shared volume between worker and api for media
       - saleor-media:/app/media
@@ -21,9 +18,8 @@ services:
       - common.env
       - backend.env
     environment:
-      - JAEGER_AGENT_HOST=jaeger
-      - DASHBOARD_URL=http://localhost:9000/
-      - ALLOWED_HOSTS=localhost,api
+      - DASHBOARD_URL=http://shop.scopal-affairs.com:9000
+      - ALLOWED_HOSTS=shop.scopal-affairs.com,saleor-storefront-self.vercel.app
 
   dashboard:
     image: ghcr.io/saleor/saleor-dashboard:latest
@@ -66,36 +62,9 @@ services:
       - backend.env
     depends_on:
       - redis
-      - mailpit
     volumes:
       # shared volume between worker and api for media
       - saleor-media:/app/media
-
-  jaeger:
-    image: jaegertracing/all-in-one
-    ports:
-      - "5775:5775/udp"
-      - "6831:6831/udp"
-      - "6832:6832/udp"
-      - "5778:5778"
-      - "16686:16686"
-      - "14268:14268"
-      - "9411:9411"
-    restart: unless-stopped
-    networks:
-      - saleor-backend-tier
-    volumes:
-      - type: tmpfs
-        target: /tmp
-
-  mailpit:
-    image: axllent/mailpit
-    ports:
-      - 1025:1025 # smtp server
-      - 8025:8025 # web ui. Visit http://localhost:8025/ to check emails
-    restart: unless-stopped
-    networks:
-      - saleor-backend-tier
 
 volumes:
   saleor-db:
