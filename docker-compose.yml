@@ -25,6 +25,8 @@ services:
   dashboard:
     image: ghcr.io/saleor/saleor-dashboard:latest
     container_name: dashboard
+    networks:
+      - saleor-backend-tier
     ports:
       - 9000:9000
     restart: unless-stopped
