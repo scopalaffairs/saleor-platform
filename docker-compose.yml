@@ -34,7 +34,7 @@ services:
     image: certbot/certbot:latest
     container_name: certbot
     # One-off container for initial certificate issuance.
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email --dry-run -d ${DOMAIN}
     volumes:
       - certbot-www:/var/www/certbot
       - certbot-conf:/etc/letsencrypt
@@ -93,9 +93,8 @@ services:
       - saleor-backend-tier
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      # Use the named volume for Certbot data so Nginx picks up the certificates.
       - certbot-conf:/etc/letsencrypt:ro
-      # Adjust this volume path as needed; ensure the host directory exists.
+      - certbot-www:/var/www/certbot:ro
       - /var/log/nginx:/var/log/nginx
     depends_on:
       - api
