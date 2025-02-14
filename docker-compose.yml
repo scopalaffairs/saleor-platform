@@ -20,9 +20,7 @@ services:
       - backend.env
     environment:
       - DASHBOARD_URL=https://shop.scopal-affairs.com/dashboard
-      - ALLOWED_HOSTS=shop.scopal-affairs.com,saleor-storefront-self.vercel.app
-      - API_URL=https://shop.scopal-affairs.com/graphql
-      - APP_MOUNT_URL=https://shop.scopal-affairs.com
+      - ALLOWED_HOSTS=shop.scopal-affairs.com,saleor-storefront-self.vercel.app,localhost,127.0.0.1
 
 
   dashboard:
@@ -33,6 +31,9 @@ services:
     ports:
       - "9000:80"
     restart: unless-stopped
+    environment:
+      - API_URL=https://shop.scopal-affairs.com/graphql
+      - APP_MOUNT_URL=https://shop.scopal-affairs.com
 
   certbot:
     image: certbot/certbot:latest
