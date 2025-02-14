@@ -35,13 +35,26 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
-    command: >-
-      certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
+    # This one-off container is used to initially obtain certificates.
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
     volumes:
-      - ./volumes/certbot/www/:/var/www/certbot/:rw
-      - ./volumes/certbot/conf/:/etc/letsencrypt/:rw
+      - certbot-www:/var/www/certbot
+      - certbot-conf:/etc/letsencrypt
     networks:
       - saleor-backend-tier
+    # Run this container manually (or with --rm) when you need to issue a new certificate.
+
+  certbot-renew:
+    image: certbot/certbot:latest
+    container_name: certbot-renew
+    # This long-running service checks for renewal every 12 hours.
+    entrypoint: sh -c "while true; do certbot renew --quiet && sleep 12h; done"
+    volumes:
+      - certbot-www:/var/www/certbot
+      - certbot-conf:/etc/letsencrypt
+    networks:
+      - saleor-backend-tier
+    restart: unless-stopped
 
   db:
     image: library/postgres:15-alpine
@@ -95,7 +108,9 @@ services:
       - saleor-backend-tier
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./volumes/certbot/conf/:/etc/letsencrypt/:ro
+      # Mount the named volume containing certbot data read-only for nginx.
+      - certbot-conf:/etc/letsencrypt:ro
+      # Persist nginx logs (ensure the host directory exists or change as needed).
       - /var/log/nginx:/var/log/nginx
     depends_on:
       - api
