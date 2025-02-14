@@ -34,7 +34,7 @@ services:
     image: certbot/certbot:latest
     container_name: certbot
     # One-off container for initial certificate issuance.
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email --dry-run -d ${DOMAIN}
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ${EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
     volumes:
       - certbot-www:/var/www/certbot
       - certbot-conf:/etc/letsencrypt
