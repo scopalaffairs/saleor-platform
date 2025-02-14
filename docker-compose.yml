@@ -44,17 +44,17 @@ services:
       - saleor-backend-tier
     # Run this container manually (or with --rm) when you need to issue a new certificate.
 
-  certbot-renew:
-    image: certbot/certbot:latest
-    container_name: certbot-renew
-    # This long-running service checks for renewal every 12 hours.
-    entrypoint: sh -c "while true; do certbot renew --quiet && sleep 12h; done"
-    volumes:
-      - certbot-www:/var/www/certbot
-      - certbot-conf:/etc/letsencrypt
-    networks:
-      - saleor-backend-tier
-    restart: unless-stopped
+  # certbot-renew:
+  #   image: certbot/certbot:latest
+  #   container_name: certbot-renew
+  #   # This long-running service checks for renewal every 12 hours.
+  #   entrypoint: sh -c "while true; do certbot renew --quiet && sleep 12h; done"
+  #   volumes:
+  #     - certbot-www:/var/www/certbot
+  #     - certbot-conf:/etc/letsencrypt
+  #   networks:
+  #     - saleor-backend-tier
+  #   restart: unless-stopped
 
   db:
     image: library/postgres:15-alpine
