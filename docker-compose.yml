@@ -15,11 +15,15 @@ services:
     volumes:
       - saleor-media:/app/media
     env_file:
+      - .env
       - common.env
       - backend.env
     environment:
       - DASHBOARD_URL=https://shop.scopal-affairs.com/dashboard
       - ALLOWED_HOSTS=shop.scopal-affairs.com,saleor-storefront-self.vercel.app
+      - API_URL=https://shop.scopal-affairs.com/graphql
+      - APP_MOUNT_URL=https://shop.scopal-affairs.com
+
 
   dashboard:
     image: ghcr.io/saleor/saleor-dashboard:latest
