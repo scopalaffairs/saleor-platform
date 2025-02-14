@@ -27,7 +27,7 @@ services:
     networks:
       - saleor-backend-tier
     ports:
-      - "9000:9000"
+      - "9000:80"
     restart: unless-stopped
 
   certbot:
