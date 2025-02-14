@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
     environment:
       - API_URL=https://shop.scopal-affairs.com/graphql
-      - APP_MOUNT_URL=https://shop.scopal-affairs.com
+      - APP_MOUNT_URI=https://shop.scopal-affairs.com
 
   certbot:
     image: certbot/certbot:latest
