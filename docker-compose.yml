@@ -18,7 +18,7 @@ services:
       - common.env
       - backend.env
     environment:
-      - DASHBOARD_URL=http://shop.scopal-affairs.com:9000
+      - DASHBOARD_URL=http://shop.scopal-affairs.com
       - ALLOWED_HOSTS=shop.scopal-affairs.com,saleor-storefront-self.vercel.app
 
   dashboard:
