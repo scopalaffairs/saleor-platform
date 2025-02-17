@@ -21,6 +21,7 @@ services:
     environment:
       - DASHBOARD_URL=https://shop.scopal-affairs.com/dashboard
       - RSA_PRIVATE_KEY=${RSA_PRIVATE_KEY}
+      - MEDIA_URL=${MEDIA_URL}
 
 
   dashboard:
