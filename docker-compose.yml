@@ -20,7 +20,6 @@ services:
       - backend.env
     environment:
       - DASHBOARD_URL=https://shop.scopal-affairs.com/dashboard
-      - ALLOWED_HOSTS=shop.scopal-affairs.com,saleor-storefront-self.vercel.app,localhost,127.0.0.1
 
 
   dashboard:
