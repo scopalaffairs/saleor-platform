@@ -36,9 +36,9 @@ services:
       - common.env
       - backend.env
     environment:
-      - API_URL=https://shop.scopal-affairs.com/graphql
-      - APP_MOUNT_URI=https://shop.scopal-affairs.com
-
+      - API_URL=https://shop.scopal-affairs.com/graphql/
+      - APP_MOUNT_URI=/dashboard
+  
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
