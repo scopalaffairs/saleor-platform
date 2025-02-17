@@ -20,6 +20,7 @@ services:
       - backend.env
     environment:
       - DASHBOARD_URL=https://shop.scopal-affairs.com/dashboard
+      - RSA_PRIVATE_KEY=${RSA_PRIVATE_KEY}
 
 
   dashboard:
